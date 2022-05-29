@@ -38,14 +38,15 @@ class ApiClient {
   final _authentications = <String, Authentication>{};
 
   void addDefaultHeader(String key, String value) {
-     _defaultHeaderMap[key] = value;
+    _defaultHeaderMap[key] = value;
   }
 
-  Map<String,String> get defaultHeaderMap => _defaultHeaderMap;
+  Map<String, String> get defaultHeaderMap => _defaultHeaderMap;
 
   /// Returns an unmodifiable [Map] of the authentications, since none should be added
   /// or deleted.
-  Map<String, Authentication> get authentications => Map.unmodifiable(_authentications);
+  Map<String, Authentication> get authentications =>
+      Map.unmodifiable(_authentications);
 
   T getAuthentication<T extends Authentication>(String name) {
     final authentication = _authentications[name];
@@ -69,14 +70,14 @@ class ApiClient {
     headerParams.addAll(_defaultHeaderMap);
 
     final urlEncodedQueryParams = queryParams
-      .where((param) => param.value != null)
-      .map((param) => '$param');
+        .where((param) => param.value != null)
+        .map((param) => '$param');
 
     final queryString = urlEncodedQueryParams.isNotEmpty
-      ? '?${urlEncodedQueryParams.join('&')}'
-      : '';
+        ? '?${urlEncodedQueryParams.join('&')}'
+        : '';
 
-    final url = '$basePath$path$queryString';
+    final url = Uri.parse('$basePath$path$queryString');
 
     if (nullableContentType != null) {
       headerParams['Content-Type'] = nullableContentType;
@@ -84,25 +85,26 @@ class ApiClient {
 
     try {
       // Special case for uploading a single file which isn't a 'multipart/form-data'.
-      if (
-        body is MultipartFile && (nullableContentType == null ||
-        !nullableContentType.toLowerCase().startsWith('multipart/form-data'))
-      ) {
-        final request = StreamedRequest(method, Uri.parse(url));
+      if (body is MultipartFile &&
+          (nullableContentType == null ||
+              !nullableContentType
+                  .toLowerCase()
+                  .startsWith('multipart/form-data'))) {
+        final request = StreamedRequest(method, url);
         request.headers.addAll(headerParams);
         request.contentLength = body.length;
         body.finalize().listen(
-          request.sink.add,
-          onDone: request.sink.close,
-          onError: (error, trace) => request.sink.close(),
-          cancelOnError: true,
-        );
+              request.sink.add,
+              onDone: request.sink.close,
+              onError: (error, trace) => request.sink.close(),
+              cancelOnError: true,
+            );
         final response = await _client.send(request);
         return Response.fromStream(response);
       }
 
       if (body is MultipartRequest) {
-        final request = MultipartRequest(method, Uri.parse(url));
+        final request = MultipartRequest(method, url);
         request.fields.addAll(body.fields);
         request.files.addAll(body.files);
         request.headers.addAll(body.headers);
@@ -112,52 +114,112 @@ class ApiClient {
       }
 
       final msgBody = nullableContentType == 'application/x-www-form-urlencoded'
-        ? formParams
-        : await serializeAsync(body);
+          ? formParams
+          : await serializeAsync(body);
       final nullableHeaderParams = headerParams.isEmpty ? null : headerParams;
 
-      switch(method) {
-        case 'POST': return await _client.post(url, headers: nullableHeaderParams, body: msgBody,);
-        case 'PUT': return await _client.put(url, headers: nullableHeaderParams, body: msgBody,);
-        case 'DELETE': return await _client.delete(url, headers: nullableHeaderParams,);
-        case 'PATCH': return await _client.patch(url, headers: nullableHeaderParams, body: msgBody,);
-        case 'HEAD': return await _client.head(url, headers: nullableHeaderParams,);
-        case 'GET': return await _client.get(url, headers: nullableHeaderParams,);
+      switch (method) {
+        case 'POST':
+          return await _client.post(
+            url,
+            headers: nullableHeaderParams,
+            body: msgBody,
+          );
+        case 'PUT':
+          return await _client.put(
+            url,
+            headers: nullableHeaderParams,
+            body: msgBody,
+          );
+        case 'DELETE':
+          return await _client.delete(
+            url,
+            headers: nullableHeaderParams,
+          );
+        case 'PATCH':
+          return await _client.patch(
+            url,
+            headers: nullableHeaderParams,
+            body: msgBody,
+          );
+        case 'HEAD':
+          return await _client.head(
+            url,
+            headers: nullableHeaderParams,
+          );
+        case 'GET':
+          return await _client.get(
+            url,
+            headers: nullableHeaderParams,
+          );
       }
     } on SocketException catch (e, trace) {
-      throw ApiException.withInner(HttpStatus.badRequest, 'Socket operation failed: $method $path', e, trace,);
+      throw ApiException.withInner(
+        HttpStatus.badRequest,
+        'Socket operation failed: $method $path',
+        e,
+        trace,
+      );
     } on TlsException catch (e, trace) {
-      throw ApiException.withInner(HttpStatus.badRequest, 'TLS/SSL communication failed: $method $path', e, trace,);
+      throw ApiException.withInner(
+        HttpStatus.badRequest,
+        'TLS/SSL communication failed: $method $path',
+        e,
+        trace,
+      );
     } on IOException catch (e, trace) {
-      throw ApiException.withInner(HttpStatus.badRequest, 'I/O operation failed: $method $path', e, trace,);
+      throw ApiException.withInner(
+        HttpStatus.badRequest,
+        'I/O operation failed: $method $path',
+        e,
+        trace,
+      );
     } on ClientException catch (e, trace) {
-      throw ApiException.withInner(HttpStatus.badRequest, 'HTTP connection failed: $method $path', e, trace,);
+      throw ApiException.withInner(
+        HttpStatus.badRequest,
+        'HTTP connection failed: $method $path',
+        e,
+        trace,
+      );
     } on Exception catch (e, trace) {
-      throw ApiException.withInner(HttpStatus.badRequest, 'Exception occurred: $method $path', e, trace,);
+      throw ApiException.withInner(
+        HttpStatus.badRequest,
+        'Exception occurred: $method $path',
+        e,
+        trace,
+      );
     }
 
-    throw ApiException(HttpStatus.badRequest, 'Invalid HTTP operation: $method $path',);
+    throw ApiException(
+      HttpStatus.badRequest,
+      'Invalid HTTP operation: $method $path',
+    );
   }
 
-  Future<dynamic> deserializeAsync(String json, String targetType, {bool growable}) async =>
-    // ignore: deprecated_member_use_from_same_package
-    deserialize(json, targetType, growable: growable);
+  Future<dynamic> deserializeAsync(String json, String targetType,
+          {bool growable}) async =>
+      // ignore: deprecated_member_use_from_same_package
+      deserialize(json, targetType, growable: growable);
 
-  @Deprecated('Scheduled for removal in OpenAPI Generator 6.x. Use deserializeAsync() instead.')
+  @Deprecated(
+      'Scheduled for removal in OpenAPI Generator 6.x. Use deserializeAsync() instead.')
   dynamic deserialize(String json, String targetType, {bool growable}) {
     // Remove all spaces. Necessary for regular expressions as well.
-    targetType = targetType.replaceAll(' ', ''); // ignore: parameter_assignments
+    targetType =
+        targetType.replaceAll(' ', ''); // ignore: parameter_assignments
 
     // If the expected target type is String, nothing to do...
     return targetType == 'String'
-      ? json
-      : _deserialize(jsonDecode(json), targetType, growable: growable == true);
+        ? json
+        : _deserialize(jsonDecode(json), targetType,
+            growable: growable == true);
   }
 
   // ignore: deprecated_member_use_from_same_package
   Future<String> serializeAsync(Object value) async => serialize(value);
 
-  @Deprecated('Scheduled for removal in OpenAPI Generator 6.x. Use serializeAsync() instead.')
+  @Deprecated(
+      'Scheduled for removal in OpenAPI Generator 6.x. Use serializeAsync() instead.')
   String serialize(Object value) => value == null ? '' : json.encode(value);
 
   /// Update query and header parameters based on authentication settings.
@@ -176,7 +238,8 @@ class ApiClient {
     });
   }
 
-  static dynamic _deserialize(dynamic value, String targetType, {bool growable}) {
+  static dynamic _deserialize(dynamic value, String targetType,
+      {bool growable}) {
     try {
       switch (targetType) {
         case 'String':
@@ -510,31 +573,43 @@ class ApiClient {
           return WebhookTestResult.fromJson(value);
         default:
           Match match;
-          if (value is List && (match = _regList.firstMatch(targetType)) != null) {
+          if (value is List &&
+              (match = _regList.firstMatch(targetType)) != null) {
             targetType = match[1]; // ignore: parameter_assignments
             return value
-              .map((v) => _deserialize(v, targetType, growable: growable))
-              .toList(growable: growable);
+                .map((v) => _deserialize(v, targetType, growable: growable))
+                .toList(growable: growable);
           }
-          if (value is Set && (match = _regSet.firstMatch(targetType)) != null) {
+          if (value is Set &&
+              (match = _regSet.firstMatch(targetType)) != null) {
             targetType = match[1]; // ignore: parameter_assignments
             return value
-              .map((v) => _deserialize(v, targetType, growable: growable))
-              .toSet();
+                .map((v) => _deserialize(v, targetType, growable: growable))
+                .toSet();
           }
-          if (value is Map && (match = _regMap.firstMatch(targetType)) != null) {
+          if (value is Map &&
+              (match = _regMap.firstMatch(targetType)) != null) {
             targetType = match[1]; // ignore: parameter_assignments
             return Map.fromIterables(
               value.keys,
-              value.values.map((v) => _deserialize(v, targetType, growable: growable)),
+              value.values
+                  .map((v) => _deserialize(v, targetType, growable: growable)),
             );
           }
           break;
       }
     } catch (error, trace) {
-      throw ApiException.withInner(HttpStatus.internalServerError, 'Exception during deserialization.', error, trace,);
+      throw ApiException.withInner(
+        HttpStatus.internalServerError,
+        'Exception during deserialization.',
+        error,
+        trace,
+      );
     }
-    throw ApiException(HttpStatus.internalServerError, 'Could not find a suitable class for deserialization',);
+    throw ApiException(
+      HttpStatus.internalServerError,
+      'Could not find a suitable class for deserialization',
+    );
   }
 }
 
@@ -563,13 +638,14 @@ Future<dynamic> deserializeAsync(DeserializationMessage message) async {
 
   // If the expected target type is String, nothing to do...
   return targetType == 'String'
-    ? message.json
-    : ApiClient._deserialize(
-        jsonDecode(message.json),
-        targetType,
-        growable: message.growable == true,
-      );
+      ? message.json
+      : ApiClient._deserialize(
+          jsonDecode(message.json),
+          targetType,
+          growable: message.growable == true,
+        );
 }
 
 /// Primarily intended for use in an isolate.
-Future<String> serializeAsync(Object value) async => value == null ? '' : json.encode(value);
+Future<String> serializeAsync(Object value) async =>
+    value == null ? '' : json.encode(value);

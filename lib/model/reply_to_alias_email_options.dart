@@ -50,36 +50,39 @@ class ReplyToAliasEmailOptions {
   bool html;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is ReplyToAliasEmailOptions &&
-     other.body == body &&
-     other.isHTML == isHTML &&
-     other.charset == charset &&
-     other.attachments == attachments &&
-     other.templateVariables == templateVariables &&
-     other.template == template &&
-     other.sendStrategy == sendStrategy &&
-     other.useInboxName == useInboxName &&
-     other.html == html;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ReplyToAliasEmailOptions &&
+          other.body == body &&
+          other.isHTML == isHTML &&
+          other.charset == charset &&
+          other.attachments == attachments &&
+          other.templateVariables == templateVariables &&
+          other.template == template &&
+          other.sendStrategy == sendStrategy &&
+          other.useInboxName == useInboxName &&
+          other.html == html;
 
   @override
   int get hashCode =>
-    (body == null ? 0 : body.hashCode) +
-    (isHTML == null ? 0 : isHTML.hashCode) +
-    (charset == null ? 0 : charset.hashCode) +
-    (attachments == null ? 0 : attachments.hashCode) +
-    (templateVariables == null ? 0 : templateVariables.hashCode) +
-    (template == null ? 0 : template.hashCode) +
-    (sendStrategy == null ? 0 : sendStrategy.hashCode) +
-    (useInboxName == null ? 0 : useInboxName.hashCode) +
-    (html == null ? 0 : html.hashCode);
+      (body == null ? 0 : body.hashCode) +
+      (isHTML == null ? 0 : isHTML.hashCode) +
+      (charset == null ? 0 : charset.hashCode) +
+      (attachments == null ? 0 : attachments.hashCode) +
+      (templateVariables == null ? 0 : templateVariables.hashCode) +
+      (template == null ? 0 : template.hashCode) +
+      (sendStrategy == null ? 0 : sendStrategy.hashCode) +
+      (useInboxName == null ? 0 : useInboxName.hashCode) +
+      (html == null ? 0 : html.hashCode);
 
   @override
-  String toString() => 'ReplyToAliasEmailOptions[body=$body, isHTML=$isHTML, charset=$charset, attachments=$attachments, templateVariables=$templateVariables, template=$template, sendStrategy=$sendStrategy, useInboxName=$useInboxName, html=$html]';
+  String toString() =>
+      'ReplyToAliasEmailOptions[body=$body, isHTML=$isHTML, charset=$charset, attachments=$attachments, templateVariables=$templateVariables, template=$template, sendStrategy=$sendStrategy, useInboxName=$useInboxName, html=$html]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-      json[r'body'] = body;
-      json[r'isHTML'] = isHTML;
+    json[r'body'] = body;
+    json[r'isHTML'] = isHTML;
     if (charset != null) {
       json[r'charset'] = charset;
     }
@@ -106,43 +109,60 @@ class ReplyToAliasEmailOptions {
 
   /// Returns a new [ReplyToAliasEmailOptions] instance and imports its values from
   /// [json] if it's non-null, null if [json] is null.
-  static ReplyToAliasEmailOptions fromJson(Map<String, dynamic> json) => json == null
-    ? null
-    : ReplyToAliasEmailOptions(
-        body: json[r'body'],
-        isHTML: json[r'isHTML'],
-        charset: json[r'charset'],
-        attachments: json[r'attachments'] == null
+  static ReplyToAliasEmailOptions fromJson(Map<String, dynamic> json) =>
+      json == null
           ? null
-          : (json[r'attachments'] as List).cast<String>(),
-        templateVariables: json[r'templateVariables'] == null
-          ? null
-          : Object.mapFromJson(json[r'templateVariables']),
-        template: json[r'template'],
-        sendStrategy: ReplyToAliasEmailOptionsSendStrategyEnum.fromJson(json[r'sendStrategy']),
-        useInboxName: json[r'useInboxName'],
-        html: json[r'html'],
-    );
+          : ReplyToAliasEmailOptions(
+              body: json[r'body'],
+              isHTML: json[r'isHTML'],
+              charset: json[r'charset'],
+              attachments: json[r'attachments'] == null
+                  ? null
+                  : (json[r'attachments'] as List).cast<String>(),
+              templateVariables: json[r'templateVariables'] == null
+                  ? null
+                  : null, //Object.mapFromJson(json[r'templateVariables']),
+              template: json[r'template'],
+              sendStrategy: ReplyToAliasEmailOptionsSendStrategyEnum.fromJson(
+                  json[r'sendStrategy']),
+              useInboxName: json[r'useInboxName'],
+              html: json[r'html'],
+            );
 
-  static List<ReplyToAliasEmailOptions> listFromJson(List<dynamic> json, {bool emptyIsNull, bool growable,}) =>
-    json == null || json.isEmpty
-      ? true == emptyIsNull ? null : <ReplyToAliasEmailOptions>[]
-      : json.map((v) => ReplyToAliasEmailOptions.fromJson(v)).toList(growable: true == growable);
+  static List<ReplyToAliasEmailOptions> listFromJson(
+    List<dynamic> json, {
+    bool emptyIsNull,
+    bool growable,
+  }) =>
+      json == null || json.isEmpty
+          ? true == emptyIsNull
+              ? null
+              : <ReplyToAliasEmailOptions>[]
+          : json
+              .map((v) => ReplyToAliasEmailOptions.fromJson(v))
+              .toList(growable: true == growable);
 
-  static Map<String, ReplyToAliasEmailOptions> mapFromJson(Map<String, dynamic> json) {
+  static Map<String, ReplyToAliasEmailOptions> mapFromJson(
+      Map<String, dynamic> json) {
     final map = <String, ReplyToAliasEmailOptions>{};
     if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic v) => map[key] = ReplyToAliasEmailOptions.fromJson(v));
+      json.forEach((String key, dynamic v) =>
+          map[key] = ReplyToAliasEmailOptions.fromJson(v));
     }
     return map;
   }
 
   // maps a json object with a list of ReplyToAliasEmailOptions-objects as value to a dart map
-  static Map<String, List<ReplyToAliasEmailOptions>> mapListFromJson(Map<String, dynamic> json, {bool emptyIsNull, bool growable,}) {
+  static Map<String, List<ReplyToAliasEmailOptions>> mapListFromJson(
+    Map<String, dynamic> json, {
+    bool emptyIsNull,
+    bool growable,
+  }) {
     final map = <String, List<ReplyToAliasEmailOptions>>{};
     if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic v) {
-        map[key] = ReplyToAliasEmailOptions.listFromJson(v, emptyIsNull: emptyIsNull, growable: growable);
+        map[key] = ReplyToAliasEmailOptions.listFromJson(v,
+            emptyIsNull: emptyIsNull, growable: growable);
       });
     }
     return map;
@@ -162,7 +182,8 @@ class ReplyToAliasEmailOptionsSendStrategyEnum {
 
   String toJson() => value;
 
-  static const SINGLE_MESSAGE = ReplyToAliasEmailOptionsSendStrategyEnum._(r'SINGLE_MESSAGE');
+  static const SINGLE_MESSAGE =
+      ReplyToAliasEmailOptionsSendStrategyEnum._(r'SINGLE_MESSAGE');
 
   /// List of all possible values in this [enum][ReplyToAliasEmailOptionsSendStrategyEnum].
   static const values = <ReplyToAliasEmailOptionsSendStrategyEnum>[
@@ -170,14 +191,21 @@ class ReplyToAliasEmailOptionsSendStrategyEnum {
   ];
 
   static ReplyToAliasEmailOptionsSendStrategyEnum fromJson(dynamic value) =>
-    ReplyToAliasEmailOptionsSendStrategyEnumTypeTransformer().decode(value);
+      ReplyToAliasEmailOptionsSendStrategyEnumTypeTransformer().decode(value);
 
-  static List<ReplyToAliasEmailOptionsSendStrategyEnum> listFromJson(List<dynamic> json, {bool emptyIsNull, bool growable,}) =>
-    json == null || json.isEmpty
-      ? true == emptyIsNull ? null : <ReplyToAliasEmailOptionsSendStrategyEnum>[]
-      : json
-          .map((value) => ReplyToAliasEmailOptionsSendStrategyEnum.fromJson(value))
-          .toList(growable: true == growable);
+  static List<ReplyToAliasEmailOptionsSendStrategyEnum> listFromJson(
+    List<dynamic> json, {
+    bool emptyIsNull,
+    bool growable,
+  }) =>
+      json == null || json.isEmpty
+          ? true == emptyIsNull
+              ? null
+              : <ReplyToAliasEmailOptionsSendStrategyEnum>[]
+          : json
+              .map((value) =>
+                  ReplyToAliasEmailOptionsSendStrategyEnum.fromJson(value))
+              .toList(growable: true == growable);
 }
 
 /// Transformation class that can [encode] an instance of [ReplyToAliasEmailOptionsSendStrategyEnum] to String,
@@ -185,7 +213,8 @@ class ReplyToAliasEmailOptionsSendStrategyEnum {
 class ReplyToAliasEmailOptionsSendStrategyEnumTypeTransformer {
   const ReplyToAliasEmailOptionsSendStrategyEnumTypeTransformer._();
 
-  factory ReplyToAliasEmailOptionsSendStrategyEnumTypeTransformer() => _instance ??= ReplyToAliasEmailOptionsSendStrategyEnumTypeTransformer._();
+  factory ReplyToAliasEmailOptionsSendStrategyEnumTypeTransformer() =>
+      _instance ??= ReplyToAliasEmailOptionsSendStrategyEnumTypeTransformer._();
 
   String encode(ReplyToAliasEmailOptionsSendStrategyEnum data) => data.value;
 
@@ -197,9 +226,11 @@ class ReplyToAliasEmailOptionsSendStrategyEnumTypeTransformer {
   ///
   /// The [allowNull] is very handy when an API changes and a new enum value is added or removed,
   /// and users are still using an old app with the old code.
-  ReplyToAliasEmailOptionsSendStrategyEnum decode(dynamic data, {bool allowNull}) {
+  ReplyToAliasEmailOptionsSendStrategyEnum decode(dynamic data,
+      {bool allowNull}) {
     switch (data) {
-      case r'SINGLE_MESSAGE': return ReplyToAliasEmailOptionsSendStrategyEnum.SINGLE_MESSAGE;
+      case r'SINGLE_MESSAGE':
+        return ReplyToAliasEmailOptionsSendStrategyEnum.SINGLE_MESSAGE;
       default:
         if (allowNull == false) {
           throw ArgumentError('Unknown enum value to decode: $data');
@@ -211,4 +242,3 @@ class ReplyToAliasEmailOptionsSendStrategyEnumTypeTransformer {
   /// Singleton [ReplyToAliasEmailOptionsSendStrategyEnumTypeTransformer] instance.
   static ReplyToAliasEmailOptionsSendStrategyEnumTypeTransformer _instance;
 }
-

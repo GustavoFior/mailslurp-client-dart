@@ -70,7 +70,7 @@ class SendEmailOptions {
   /// Optional charset
   String charset;
 
-  /// Optional list of attachment IDs to send with this email. You must first upload each attachment separately via method call or dashboard in order to obtain attachment IDs. This way you can reuse attachments with different emails once uploaded. There are several ways to upload that support `multi-part form`, `base64 file encoding`, and octet stream binary uploads. See the `UploadController` for available methods. 
+  /// Optional list of attachment IDs to send with this email. You must first upload each attachment separately via method call or dashboard in order to obtain attachment IDs. This way you can reuse attachments with different emails once uploaded. There are several ways to upload that support `multi-part form`, `base64 file encoding`, and octet stream binary uploads. See the `UploadController` for available methods.
   List<String> attachments;
 
   /// Optional map of template variables. Will replace moustache syntax variables in subject and body or template with the associated values if found.
@@ -95,53 +95,56 @@ class SendEmailOptions {
   SendEmailOptionsValidateEmailAddressesEnum validateEmailAddresses;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is SendEmailOptions &&
-     other.toContacts == toContacts &&
-     other.toGroup == toGroup &&
-     other.to == to &&
-     other.from == from &&
-     other.cc == cc &&
-     other.bcc == bcc &&
-     other.subject == subject &&
-     other.replyTo == replyTo &&
-     other.body == body &&
-     other.html == html &&
-     other.isHTML == isHTML &&
-     other.charset == charset &&
-     other.attachments == attachments &&
-     other.templateVariables == templateVariables &&
-     other.template == template &&
-     other.sendStrategy == sendStrategy &&
-     other.useInboxName == useInboxName &&
-     other.addTrackingPixel == addTrackingPixel &&
-     other.filterBouncedRecipients == filterBouncedRecipients &&
-     other.validateEmailAddresses == validateEmailAddresses;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SendEmailOptions &&
+          other.toContacts == toContacts &&
+          other.toGroup == toGroup &&
+          other.to == to &&
+          other.from == from &&
+          other.cc == cc &&
+          other.bcc == bcc &&
+          other.subject == subject &&
+          other.replyTo == replyTo &&
+          other.body == body &&
+          other.html == html &&
+          other.isHTML == isHTML &&
+          other.charset == charset &&
+          other.attachments == attachments &&
+          other.templateVariables == templateVariables &&
+          other.template == template &&
+          other.sendStrategy == sendStrategy &&
+          other.useInboxName == useInboxName &&
+          other.addTrackingPixel == addTrackingPixel &&
+          other.filterBouncedRecipients == filterBouncedRecipients &&
+          other.validateEmailAddresses == validateEmailAddresses;
 
   @override
   int get hashCode =>
-    (toContacts == null ? 0 : toContacts.hashCode) +
-    (toGroup == null ? 0 : toGroup.hashCode) +
-    (to == null ? 0 : to.hashCode) +
-    (from == null ? 0 : from.hashCode) +
-    (cc == null ? 0 : cc.hashCode) +
-    (bcc == null ? 0 : bcc.hashCode) +
-    (subject == null ? 0 : subject.hashCode) +
-    (replyTo == null ? 0 : replyTo.hashCode) +
-    (body == null ? 0 : body.hashCode) +
-    (html == null ? 0 : html.hashCode) +
-    (isHTML == null ? 0 : isHTML.hashCode) +
-    (charset == null ? 0 : charset.hashCode) +
-    (attachments == null ? 0 : attachments.hashCode) +
-    (templateVariables == null ? 0 : templateVariables.hashCode) +
-    (template == null ? 0 : template.hashCode) +
-    (sendStrategy == null ? 0 : sendStrategy.hashCode) +
-    (useInboxName == null ? 0 : useInboxName.hashCode) +
-    (addTrackingPixel == null ? 0 : addTrackingPixel.hashCode) +
-    (filterBouncedRecipients == null ? 0 : filterBouncedRecipients.hashCode) +
-    (validateEmailAddresses == null ? 0 : validateEmailAddresses.hashCode);
+      (toContacts == null ? 0 : toContacts.hashCode) +
+      (toGroup == null ? 0 : toGroup.hashCode) +
+      (to == null ? 0 : to.hashCode) +
+      (from == null ? 0 : from.hashCode) +
+      (cc == null ? 0 : cc.hashCode) +
+      (bcc == null ? 0 : bcc.hashCode) +
+      (subject == null ? 0 : subject.hashCode) +
+      (replyTo == null ? 0 : replyTo.hashCode) +
+      (body == null ? 0 : body.hashCode) +
+      (html == null ? 0 : html.hashCode) +
+      (isHTML == null ? 0 : isHTML.hashCode) +
+      (charset == null ? 0 : charset.hashCode) +
+      (attachments == null ? 0 : attachments.hashCode) +
+      (templateVariables == null ? 0 : templateVariables.hashCode) +
+      (template == null ? 0 : template.hashCode) +
+      (sendStrategy == null ? 0 : sendStrategy.hashCode) +
+      (useInboxName == null ? 0 : useInboxName.hashCode) +
+      (addTrackingPixel == null ? 0 : addTrackingPixel.hashCode) +
+      (filterBouncedRecipients == null ? 0 : filterBouncedRecipients.hashCode) +
+      (validateEmailAddresses == null ? 0 : validateEmailAddresses.hashCode);
 
   @override
-  String toString() => 'SendEmailOptions[toContacts=$toContacts, toGroup=$toGroup, to=$to, from=$from, cc=$cc, bcc=$bcc, subject=$subject, replyTo=$replyTo, body=$body, html=$html, isHTML=$isHTML, charset=$charset, attachments=$attachments, templateVariables=$templateVariables, template=$template, sendStrategy=$sendStrategy, useInboxName=$useInboxName, addTrackingPixel=$addTrackingPixel, filterBouncedRecipients=$filterBouncedRecipients, validateEmailAddresses=$validateEmailAddresses]';
+  String toString() =>
+      'SendEmailOptions[toContacts=$toContacts, toGroup=$toGroup, to=$to, from=$from, cc=$cc, bcc=$bcc, subject=$subject, replyTo=$replyTo, body=$body, html=$html, isHTML=$isHTML, charset=$charset, attachments=$attachments, templateVariables=$templateVariables, template=$template, sendStrategy=$sendStrategy, useInboxName=$useInboxName, addTrackingPixel=$addTrackingPixel, filterBouncedRecipients=$filterBouncedRecipients, validateEmailAddresses=$validateEmailAddresses]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -211,61 +214,74 @@ class SendEmailOptions {
   /// Returns a new [SendEmailOptions] instance and imports its values from
   /// [json] if it's non-null, null if [json] is null.
   static SendEmailOptions fromJson(Map<String, dynamic> json) => json == null
-    ? null
-    : SendEmailOptions(
-        toContacts: json[r'toContacts'] == null
-          ? null
-          : (json[r'toContacts'] as List).cast<String>(),
-        toGroup: json[r'toGroup'],
-        to: json[r'to'] == null
-          ? null
-          : (json[r'to'] as List).cast<String>(),
-        from: json[r'from'],
-        cc: json[r'cc'] == null
-          ? null
-          : (json[r'cc'] as List).cast<String>(),
-        bcc: json[r'bcc'] == null
-          ? null
-          : (json[r'bcc'] as List).cast<String>(),
-        subject: json[r'subject'],
-        replyTo: json[r'replyTo'],
-        body: json[r'body'],
-        html: json[r'html'],
-        isHTML: json[r'isHTML'],
-        charset: json[r'charset'],
-        attachments: json[r'attachments'] == null
-          ? null
-          : (json[r'attachments'] as List).cast<String>(),
-        templateVariables: json[r'templateVariables'] == null
-          ? null
-          : Object.mapFromJson(json[r'templateVariables']),
-        template: json[r'template'],
-        sendStrategy: SendEmailOptionsSendStrategyEnum.fromJson(json[r'sendStrategy']),
-        useInboxName: json[r'useInboxName'],
-        addTrackingPixel: json[r'addTrackingPixel'],
-        filterBouncedRecipients: json[r'filterBouncedRecipients'],
-        validateEmailAddresses: SendEmailOptionsValidateEmailAddressesEnum.fromJson(json[r'validateEmailAddresses']),
-    );
+      ? null
+      : SendEmailOptions(
+          toContacts: json[r'toContacts'] == null
+              ? null
+              : (json[r'toContacts'] as List).cast<String>(),
+          toGroup: json[r'toGroup'],
+          to: json[r'to'] == null ? null : (json[r'to'] as List).cast<String>(),
+          from: json[r'from'],
+          cc: json[r'cc'] == null ? null : (json[r'cc'] as List).cast<String>(),
+          bcc: json[r'bcc'] == null
+              ? null
+              : (json[r'bcc'] as List).cast<String>(),
+          subject: json[r'subject'],
+          replyTo: json[r'replyTo'],
+          body: json[r'body'],
+          html: json[r'html'],
+          isHTML: json[r'isHTML'],
+          charset: json[r'charset'],
+          attachments: json[r'attachments'] == null
+              ? null
+              : (json[r'attachments'] as List).cast<String>(),
+          templateVariables: json[r'templateVariables'] == null
+              ? null
+              : null, //Object.mapFromJson(json[r'templateVariables']),
+          template: json[r'template'],
+          sendStrategy:
+              SendEmailOptionsSendStrategyEnum.fromJson(json[r'sendStrategy']),
+          useInboxName: json[r'useInboxName'],
+          addTrackingPixel: json[r'addTrackingPixel'],
+          filterBouncedRecipients: json[r'filterBouncedRecipients'],
+          validateEmailAddresses:
+              SendEmailOptionsValidateEmailAddressesEnum.fromJson(
+                  json[r'validateEmailAddresses']),
+        );
 
-  static List<SendEmailOptions> listFromJson(List<dynamic> json, {bool emptyIsNull, bool growable,}) =>
-    json == null || json.isEmpty
-      ? true == emptyIsNull ? null : <SendEmailOptions>[]
-      : json.map((v) => SendEmailOptions.fromJson(v)).toList(growable: true == growable);
+  static List<SendEmailOptions> listFromJson(
+    List<dynamic> json, {
+    bool emptyIsNull,
+    bool growable,
+  }) =>
+      json == null || json.isEmpty
+          ? true == emptyIsNull
+              ? null
+              : <SendEmailOptions>[]
+          : json
+              .map((v) => SendEmailOptions.fromJson(v))
+              .toList(growable: true == growable);
 
   static Map<String, SendEmailOptions> mapFromJson(Map<String, dynamic> json) {
     final map = <String, SendEmailOptions>{};
     if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic v) => map[key] = SendEmailOptions.fromJson(v));
+      json.forEach(
+          (String key, dynamic v) => map[key] = SendEmailOptions.fromJson(v));
     }
     return map;
   }
 
   // maps a json object with a list of SendEmailOptions-objects as value to a dart map
-  static Map<String, List<SendEmailOptions>> mapListFromJson(Map<String, dynamic> json, {bool emptyIsNull, bool growable,}) {
+  static Map<String, List<SendEmailOptions>> mapListFromJson(
+    Map<String, dynamic> json, {
+    bool emptyIsNull,
+    bool growable,
+  }) {
     final map = <String, List<SendEmailOptions>>{};
     if (json != null && json.isNotEmpty) {
       json.forEach((String key, dynamic v) {
-        map[key] = SendEmailOptions.listFromJson(v, emptyIsNull: emptyIsNull, growable: growable);
+        map[key] = SendEmailOptions.listFromJson(v,
+            emptyIsNull: emptyIsNull, growable: growable);
       });
     }
     return map;
@@ -285,7 +301,8 @@ class SendEmailOptionsSendStrategyEnum {
 
   String toJson() => value;
 
-  static const SINGLE_MESSAGE = SendEmailOptionsSendStrategyEnum._(r'SINGLE_MESSAGE');
+  static const SINGLE_MESSAGE =
+      SendEmailOptionsSendStrategyEnum._(r'SINGLE_MESSAGE');
 
   /// List of all possible values in this [enum][SendEmailOptionsSendStrategyEnum].
   static const values = <SendEmailOptionsSendStrategyEnum>[
@@ -293,14 +310,20 @@ class SendEmailOptionsSendStrategyEnum {
   ];
 
   static SendEmailOptionsSendStrategyEnum fromJson(dynamic value) =>
-    SendEmailOptionsSendStrategyEnumTypeTransformer().decode(value);
+      SendEmailOptionsSendStrategyEnumTypeTransformer().decode(value);
 
-  static List<SendEmailOptionsSendStrategyEnum> listFromJson(List<dynamic> json, {bool emptyIsNull, bool growable,}) =>
-    json == null || json.isEmpty
-      ? true == emptyIsNull ? null : <SendEmailOptionsSendStrategyEnum>[]
-      : json
-          .map((value) => SendEmailOptionsSendStrategyEnum.fromJson(value))
-          .toList(growable: true == growable);
+  static List<SendEmailOptionsSendStrategyEnum> listFromJson(
+    List<dynamic> json, {
+    bool emptyIsNull,
+    bool growable,
+  }) =>
+      json == null || json.isEmpty
+          ? true == emptyIsNull
+              ? null
+              : <SendEmailOptionsSendStrategyEnum>[]
+          : json
+              .map((value) => SendEmailOptionsSendStrategyEnum.fromJson(value))
+              .toList(growable: true == growable);
 }
 
 /// Transformation class that can [encode] an instance of [SendEmailOptionsSendStrategyEnum] to String,
@@ -308,7 +331,8 @@ class SendEmailOptionsSendStrategyEnum {
 class SendEmailOptionsSendStrategyEnumTypeTransformer {
   const SendEmailOptionsSendStrategyEnumTypeTransformer._();
 
-  factory SendEmailOptionsSendStrategyEnumTypeTransformer() => _instance ??= SendEmailOptionsSendStrategyEnumTypeTransformer._();
+  factory SendEmailOptionsSendStrategyEnumTypeTransformer() =>
+      _instance ??= SendEmailOptionsSendStrategyEnumTypeTransformer._();
 
   String encode(SendEmailOptionsSendStrategyEnum data) => data.value;
 
@@ -322,7 +346,8 @@ class SendEmailOptionsSendStrategyEnumTypeTransformer {
   /// and users are still using an old app with the old code.
   SendEmailOptionsSendStrategyEnum decode(dynamic data, {bool allowNull}) {
     switch (data) {
-      case r'SINGLE_MESSAGE': return SendEmailOptionsSendStrategyEnum.SINGLE_MESSAGE;
+      case r'SINGLE_MESSAGE':
+        return SendEmailOptionsSendStrategyEnum.SINGLE_MESSAGE;
       default:
         if (allowNull == false) {
           throw ArgumentError('Unknown enum value to decode: $data');
@@ -348,9 +373,14 @@ class SendEmailOptionsValidateEmailAddressesEnum {
 
   String toJson() => value;
 
-  static const VALIDATE_FILTER_REMOVE_INVALID = SendEmailOptionsValidateEmailAddressesEnum._(r'VALIDATE_FILTER_REMOVE_INVALID');
-  static const VALIDATE_ERROR_IF_INVALID = SendEmailOptionsValidateEmailAddressesEnum._(r'VALIDATE_ERROR_IF_INVALID');
-  static const NO_VALIDATION = SendEmailOptionsValidateEmailAddressesEnum._(r'NO_VALIDATION');
+  static const VALIDATE_FILTER_REMOVE_INVALID =
+      SendEmailOptionsValidateEmailAddressesEnum._(
+          r'VALIDATE_FILTER_REMOVE_INVALID');
+  static const VALIDATE_ERROR_IF_INVALID =
+      SendEmailOptionsValidateEmailAddressesEnum._(
+          r'VALIDATE_ERROR_IF_INVALID');
+  static const NO_VALIDATION =
+      SendEmailOptionsValidateEmailAddressesEnum._(r'NO_VALIDATION');
 
   /// List of all possible values in this [enum][SendEmailOptionsValidateEmailAddressesEnum].
   static const values = <SendEmailOptionsValidateEmailAddressesEnum>[
@@ -360,14 +390,21 @@ class SendEmailOptionsValidateEmailAddressesEnum {
   ];
 
   static SendEmailOptionsValidateEmailAddressesEnum fromJson(dynamic value) =>
-    SendEmailOptionsValidateEmailAddressesEnumTypeTransformer().decode(value);
+      SendEmailOptionsValidateEmailAddressesEnumTypeTransformer().decode(value);
 
-  static List<SendEmailOptionsValidateEmailAddressesEnum> listFromJson(List<dynamic> json, {bool emptyIsNull, bool growable,}) =>
-    json == null || json.isEmpty
-      ? true == emptyIsNull ? null : <SendEmailOptionsValidateEmailAddressesEnum>[]
-      : json
-          .map((value) => SendEmailOptionsValidateEmailAddressesEnum.fromJson(value))
-          .toList(growable: true == growable);
+  static List<SendEmailOptionsValidateEmailAddressesEnum> listFromJson(
+    List<dynamic> json, {
+    bool emptyIsNull,
+    bool growable,
+  }) =>
+      json == null || json.isEmpty
+          ? true == emptyIsNull
+              ? null
+              : <SendEmailOptionsValidateEmailAddressesEnum>[]
+          : json
+              .map((value) =>
+                  SendEmailOptionsValidateEmailAddressesEnum.fromJson(value))
+              .toList(growable: true == growable);
 }
 
 /// Transformation class that can [encode] an instance of [SendEmailOptionsValidateEmailAddressesEnum] to String,
@@ -375,7 +412,9 @@ class SendEmailOptionsValidateEmailAddressesEnum {
 class SendEmailOptionsValidateEmailAddressesEnumTypeTransformer {
   const SendEmailOptionsValidateEmailAddressesEnumTypeTransformer._();
 
-  factory SendEmailOptionsValidateEmailAddressesEnumTypeTransformer() => _instance ??= SendEmailOptionsValidateEmailAddressesEnumTypeTransformer._();
+  factory SendEmailOptionsValidateEmailAddressesEnumTypeTransformer() =>
+      _instance ??=
+          SendEmailOptionsValidateEmailAddressesEnumTypeTransformer._();
 
   String encode(SendEmailOptionsValidateEmailAddressesEnum data) => data.value;
 
@@ -387,11 +426,17 @@ class SendEmailOptionsValidateEmailAddressesEnumTypeTransformer {
   ///
   /// The [allowNull] is very handy when an API changes and a new enum value is added or removed,
   /// and users are still using an old app with the old code.
-  SendEmailOptionsValidateEmailAddressesEnum decode(dynamic data, {bool allowNull}) {
+  SendEmailOptionsValidateEmailAddressesEnum decode(dynamic data,
+      {bool allowNull}) {
     switch (data) {
-      case r'VALIDATE_FILTER_REMOVE_INVALID': return SendEmailOptionsValidateEmailAddressesEnum.VALIDATE_FILTER_REMOVE_INVALID;
-      case r'VALIDATE_ERROR_IF_INVALID': return SendEmailOptionsValidateEmailAddressesEnum.VALIDATE_ERROR_IF_INVALID;
-      case r'NO_VALIDATION': return SendEmailOptionsValidateEmailAddressesEnum.NO_VALIDATION;
+      case r'VALIDATE_FILTER_REMOVE_INVALID':
+        return SendEmailOptionsValidateEmailAddressesEnum
+            .VALIDATE_FILTER_REMOVE_INVALID;
+      case r'VALIDATE_ERROR_IF_INVALID':
+        return SendEmailOptionsValidateEmailAddressesEnum
+            .VALIDATE_ERROR_IF_INVALID;
+      case r'NO_VALIDATION':
+        return SendEmailOptionsValidateEmailAddressesEnum.NO_VALIDATION;
       default:
         if (allowNull == false) {
           throw ArgumentError('Unknown enum value to decode: $data');
@@ -403,4 +448,3 @@ class SendEmailOptionsValidateEmailAddressesEnumTypeTransformer {
   /// Singleton [SendEmailOptionsValidateEmailAddressesEnumTypeTransformer] instance.
   static SendEmailOptionsValidateEmailAddressesEnumTypeTransformer _instance;
 }
-
